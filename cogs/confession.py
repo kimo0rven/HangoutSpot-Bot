@@ -65,8 +65,8 @@ class Confession(commands.Cog):
                 description=f"{ctx.author.mention}, your anonymous confession was successfully posted to **{guild.name}**!",
                 color=color)
             embed.set_author(name=f"Confessions » {guild.name}", url="https://discord.gg/GmPdy6qaSw",
-                             icon_url=ctx.author.avatar.url
-                             )
+                            icon_url=ctx.author.avatar.url
+                            )
             embed.add_field(name="Confession: ", value=f"||{confession}||", inline=True)
             embed.add_field(name="Channel:", value=f"<#{confessionChannel}>", inline=True)
             embed.set_footer(text=" ")

@@ -21,6 +21,7 @@ def circle(pfp, size=(220, 220)):
 class Others(commands.Cog):
     """ Other Commands
     """
+
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 

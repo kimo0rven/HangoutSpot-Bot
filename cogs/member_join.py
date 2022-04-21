@@ -57,7 +57,8 @@ class cog_member_join(commands.Cog):
         w, h = draw.textsize(str(memberName))
         myFont = ImageFont.truetype('./assets/Bella Safira.otf', 30)
         centerX = w/2
-        draw.text((572-centerX, 252), memberName, align='center', font=myFont, fill=(245, 222, 85))
+        draw.text((572-centerX, 252), memberName, align='center',
+                  font=myFont, fill=(245, 222, 85))
 
         embed = nextcord.Embed(
         )
@@ -67,7 +68,7 @@ class cog_member_join(commands.Cog):
             a.seek(0)
             embed.set_image(url="attachment://profile.py.png")
             await channel.send(file=nextcord.File(a, "profile.py.png"))
-            #await channel.send(content=member.mention, file=nextcord.File(a, filename="profile.py.png"), embed=embed)
+            # await channel.send(content=member.mention, file=nextcord.File(a, filename="profile.py.png"), embed=embed)
 
 
 def setup(bot):

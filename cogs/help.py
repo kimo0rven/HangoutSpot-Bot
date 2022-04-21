@@ -3,8 +3,6 @@ from nextcord.ext import commands, menus
 import bot_config.config
 
 
-
-
 class HelpPageSource(menus.ListPageSource):
     def __init__(self, help_command, data):
         self._help_command = help_command
@@ -113,10 +111,12 @@ class NewHelpCommand(commands.MinimalHelpCommand):
 
     async def send_group_help(self, group: commands.Group):
         """implements group help page and command help page"""
-        embed = nextcord.Embed(title=f"{group.cog_name}: {group.qualified_name}", colour=self.COLOUR)
+        embed = nextcord.Embed(
+            title=f"{group.cog_name}: {group.qualified_name}", colour=self.COLOUR)
         if len(group.aliases):
             group.aliases = str(group.aliases)
-            group.aliases = group.aliases.replace("[", " ").replace("]", "").replace("'", "").strip()
+            group.aliases = group.aliases.replace(
+                "[", " ").replace("]", "").replace("'", "").strip()
         else:
             group.aliases = "None"
 

@@ -40,15 +40,17 @@ class miniGames(commands.Cog, name="Mini Games"):
 
         except nextcord.HTTPException:
             return await ctx.send("Please mention a voice channel to join and create a game!")
-        em = nextcord.Embed(title="Sketch", description=f"{ctx.author.mention} has created a game in {channel.mention}")
-        em.add_field(name="How to play?", value="It's like Skribble.io but in a vc.")
+        em = nextcord.Embed(
+            title="Sketch", description=f"{ctx.author.mention} has created a game in {channel.mention}")
+        em.add_field(name="How to play?",
+                     value="It's like Skribble.io but in a vc.")
 
         await ctx.send(embed=em, view=makeLinkBTN(invite_link))
 
     @play.command()
     async def poker(self, ctx, channel: nextcord.VoiceChannel = None):
         """
-         A Texas hold 'em style game we developed here at Discord. You can play with up to 8 players total per game (you + 7 others), and have up to 17 additional spectators max.
+        A Texas hold 'em style game we developed here at Discord. You can play with up to 8 players total per game (you + 7 others), and have up to 17 additional spectators max.
         """
         if channel is None:
             return await ctx.send("Please specify a channel to join!")
@@ -58,7 +60,8 @@ class miniGames(commands.Cog, name="Mini Games"):
 
         except nextcord.HTTPException:
             return await ctx.send("Please mention a voice channel to join and create a game!")
-        em = nextcord.Embed(title="Poker", description=f"{ctx.author.mention} has created a game in {channel.mention}")
+        em = nextcord.Embed(
+            title="Poker", description=f"{ctx.author.mention} has created a game in {channel.mention}")
         em.add_field(name="How to play?", value="Poker but in a VC!")
 
         await ctx.send(embed=em, view=makeLinkBTN(invite_link))

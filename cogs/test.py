@@ -17,17 +17,24 @@ currency = "**⌬**"
 color = 15799643
 
 game_items = [
-    {"Item": {"chance": [1, 100], "emoji": "emoji", "name": "item", "description": "a description", "price": 0, "rarity": "rare", "type": "craft"}},
-    {"Item": {"chance": [1, 100], "emoji": "emoji", "name": "item", "description": "a description", "price": 0, "rarity": "rare", "type": "craft"}}
+    {"Item": {"chance": [1, 100], "emoji": "emoji", "name": "item",
+              "description": "a description", "price": 0, "rarity": "rare", "type": "craft"}},
+    {"Item": {"chance": [1, 100], "emoji": "emoji", "name": "item",
+              "description": "a description", "price": 0, "rarity": "rare", "type": "craft"}}
 
 ]
 
 shop = [
-    {"Emoji": "⛏", "Name": "Pickaxe", "Price": 50, "ID": "pickaxe", "Description": "Used to dig"},
-    {"Emoji": "🪓", "Name": "Axe", "Price": 50, "ID": "axe", "Description": "Used to cut woods"},
-    {"Emoji": "🎣", "Name": "Fishing Rod", "Price": 50, "ID": "fishingrod", "Description": "Used to catch fish"},
-    {"Emoji": "⚔", "Name": "Swords", "Price": 50, "ID": "swords", "Description": "Used to fight monsters"},
-    {"Emoji": "🔫", "Name": "Gun", "Price": 50, "ID": "gun", "Description": "Used to hunt animals"}
+    {"Emoji": "⛏", "Name": "Pickaxe", "Price": 50,
+        "ID": "pickaxe", "Description": "Used to dig"},
+    {"Emoji": "🪓", "Name": "Axe", "Price": 50,
+        "ID": "axe", "Description": "Used to cut woods"},
+    {"Emoji": "🎣", "Name": "Fishing Rod", "Price": 50,
+        "ID": "fishingrod", "Description": "Used to catch fish"},
+    {"Emoji": "⚔", "Name": "Swords", "Price": 50,
+        "ID": "swords", "Description": "Used to fight monsters"},
+    {"Emoji": "🔫", "Name": "Gun", "Price": 50,
+        "ID": "gun", "Description": "Used to hunt animals"}
 ]
 
 
@@ -85,7 +92,7 @@ class HangoutSpotGame(commands.Cog):
                     color=nextcord.Color.green()
                 )
                 message = await message.channel.send(embed=embed)
-                check = lambda m: m.content == "!grab"
+                def check(m): return m.content == "!grab"
                 try:
                     confirm = await self.bot.wait_for(event='message', check=check, timeout=30)
                 except asyncio.TimeoutError:
@@ -142,7 +149,8 @@ class HangoutSpotGame(commands.Cog):
             price = item["Price"]
             desc = item["Description"]
             item_id = item["ID"]
-            embed.add_field(name=f"{emoji} {name} - {currency} {price}", value=f"ID:`{item_id}`\n```{desc}```")
+            embed.add_field(
+                name=f"{emoji} {name} - {currency} {price}", value=f"ID:`{item_id}`\n```{desc}```")
         await ctx.send(embed=embed)
 
     @commands.command(name="Buy", aliases=["b"])

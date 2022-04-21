@@ -1,5 +1,4 @@
 import asyncio
-import datetime
 import nextcord
 import random
 
@@ -57,7 +56,8 @@ class Fun(commands.Cog):
     @commands.command(name="8ball", aliases=["ask", "eightball"])
     async def _8ball(self, ctx):
         """ Ask the the magic 8ball about your future """
-        allowed_channel = [887626373991120946, 848771072933363732, 880375753538170880, 806553902425309244]
+        allowed_channel = [887626373991120946, 848771072933363732,
+                           880375753538170880, 806553902425309244]
         if ctx.channel.id not in allowed_channel:
             return
         responses = ["It is certain", " It is decidedly so", "Without a doubt", "Yes definitely",

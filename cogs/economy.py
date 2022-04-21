@@ -103,8 +103,8 @@ def guessChecker(Guess, bet, choice, ctx, color):
     else:
         reason = "Didn't Guessed the number"
         unbAPI(-abs(bet), reason, ctx.author.id)
-        third = nextcord.Embed(description=f"Uh oh! The number I was thinking of was `{choice}` and lost "
-                                           f"{currency}{'{:,}'.format(-abs(bet))} ", color=color)
+        third = nextcord.Embed(
+            description=f"Uh oh! The number I was thinking of was `{choice}` and lost "f"{currency}{'{:,}'.format(-abs(bet))} ", color=color)
         third.set_author(name=ctx.author, icon_url=ctx.author.avatar.url)
         third.timestamp = datetime.datetime.utcnow()
         return ctx.reply(embed=third, allowed_mentions=am)
@@ -263,7 +263,8 @@ class Economy(commands.Cog, name="Economy"):
             reason = "Reward"
             await asyncio.sleep(3)
             unbAPI(amount, reason, person.id)
-        users2 = " and ".join([", ".join(users[:-1]), users[-1]] if len(users) > 2 else users)
+        users2 = " and ".join(
+            [", ".join(users[:-1]), users[-1]] if len(users) > 2 else users)
         embed = nextcord.Embed(
             description=f"\✅ Added {currency}{'{:,}'.format(amount)} to {users2}"
                         f"'s bank for participating.",
@@ -280,7 +281,8 @@ class Economy(commands.Cog, name="Economy"):
         if ctx.channel.id not in allowed_channel:
             return
         view = Scout()
-        embed = nextcord.Embed(description=f"Where do you want to go?", color=self.bot.color)
+        embed = nextcord.Embed(
+            description=f"Where do you want to go?", color=self.bot.color)
         await ctx.reply(embed=embed, view=view, allowed_mentions=am)
 
     @commands.Cog.listener()

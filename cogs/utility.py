@@ -53,7 +53,8 @@ class Utility(commands.Cog):
         proc = Process()
         with proc.oneshot():
             uptime = timedelta(seconds=time() - proc.create_time())
-            cpu_time = timedelta(seconds=(cpu := proc.cpu_times()).system + cpu.user)
+            cpu_time = timedelta(
+                seconds=(cpu := proc.cpu_times()).system + cpu.user)
             mem_total = virtual_memory().total / (1024 ** 2)
             mem_of_total = proc.memory_percent()
             mem_usage = mem_total * (mem_of_total / 100)
@@ -63,8 +64,10 @@ class Utility(commands.Cog):
             ("Nextcord", discord_version, True),
             ("Uptime", uptime, True),
             ("CPU time", cpu_time, True),
-            ("CPU Usage", f"{psutil.cpu_percent()}% - {psutil.cpu_count()} Threads", True),
-            ("Memory usage", f"{mem_usage:,.3f} / {mem_total:,.0f} MiB ({psutil.virtual_memory()[2]}%)", True)
+            ("CPU Usage",
+             f"{psutil.cpu_percent()}% - {psutil.cpu_count()} Threads", True),
+            ("Memory usage",
+             f"{mem_usage:,.3f} / {mem_total:,.0f} MiB ({psutil.virtual_memory()[2]}%)", True)
         ]
 
         for name, value, inline in fields:
@@ -83,10 +86,13 @@ class Utility(commands.Cog):
         embed = nextcord.Embed(color=0xDFA3FF, description=user.mention)
         embed.set_author(name=str(user.name), icon_url=user.display_avatar.url)
         embed.set_thumbnail(url=user.display_avatar.url)
-        embed.add_field(name="Joined", value=user.joined_at.strftime(date_format))
+        embed.add_field(
+            name="Joined", value=user.joined_at.strftime(date_format))
         members = sorted(ctx.guild.members, key=lambda m: m.joined_at)
-        embed.add_field(name="Join position", value=str(members.index(user) + 1))
-        embed.add_field(name="Registered", value=user.created_at.strftime(date_format))
+        embed.add_field(name="Join position",
+                        value=str(members.index(user) + 1))
+        embed.add_field(name="Registered",
+                        value=user.created_at.strftime(date_format))
         if len(user.roles) > 1:
             role_string = " ".join([r.mention for r in user.roles][1:])
             embed.add_field(
@@ -113,7 +119,8 @@ class Utility(commands.Cog):
             value=str(ctx.guild.verification_level),
             inline=True,
         )
-        embed2.add_field(name="Number of roles", value=str(role_count), inline=True)
+        embed2.add_field(name="Number of roles",
+                         value=str(role_count), inline=True)
         embed2.add_field(
             name="Number Of Members", value=ctx.guild.member_count, inline=True
         )
@@ -166,7 +173,8 @@ class Utility(commands.Cog):
 
         if arg == '':
             member = await self.bot.fetch_user(member.id)
-            avatar_embed = nextcord.Embed(title='Avatar', color=nextcord.Colour.random())
+            avatar_embed = nextcord.Embed(
+                title='Avatar', color=nextcord.Colour.random())
             avatar_embed.set_image(url=member.avatar.url)
             avatar_embed.set_author(name='{0}#{1}'.format(member.name, member.discriminator),
                                     icon_url=member.avatar.url)
@@ -174,7 +182,8 @@ class Utility(commands.Cog):
             await ctx.send(embed=avatar_embed)
         else:
             try:
-                avatar_embed = nextcord.Embed(title='Guild Avatar', color=nextcord.Colour.random())
+                avatar_embed = nextcord.Embed(
+                    title='Guild Avatar', color=nextcord.Colour.random())
                 avatar_embed.set_image(url=member.avatar.url)
                 avatar_embed.set_author(name='{0}#{1}'.format(member.name, member.discriminator),
                                         icon_url=member.guild_avatar.url)
@@ -217,7 +226,8 @@ class Utility(commands.Cog):
         embed.set_author(name=ctx.author,
                          icon_url=ctx.author.avatar.url)
         embed.timestamp = datetime.datetime.utcnow()
-        embed.add_field(name=f"Commands Cooldown Status", value='\n'.join([f"{bot['Emoji']}{bot['Command']}: `{bot['Cooldown']}`" for bot in cmdView]))
+        embed.add_field(name=f"Commands Cooldown Status", value='\n'.join(
+            [f"{bot['Emoji']}{bot['Command']}: `{bot['Cooldown']}`" for bot in cmdView]))
         await ctx.send(embed=embed)
 
     @commands.command(name="MusicBots", aliases=["Available", "MB"])
@@ -253,10 +263,12 @@ class Utility(commands.Cog):
         available = sorted(available, key=lambda d: d["Name"])
         unavailable = sorted(unavailable, key=lambda d: d["Name"])
         message_embed.add_field(name="Available",
-                                value='\n'.join([f"🔹{bot['Name']}" for bot in available])
+                                value='\n'.join(
+                                    [f"🔹{bot['Name']}" for bot in available])
                                 )
         message_embed.add_field(name="Unavailable",
-                                value='\n'.join([f"🔻{bot['Name']}" for bot in unavailable])
+                                value='\n'.join(
+                                    [f"🔻{bot['Name']}" for bot in unavailable])
                                 )
         await ctx.send(embed=message_embed)
 

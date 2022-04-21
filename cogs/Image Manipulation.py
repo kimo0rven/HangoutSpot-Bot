@@ -1,4 +1,5 @@
-import nextcord, json
+import nextcord
+import json
 import requests
 import firebase_admin
 from firebase_admin import credentials
@@ -74,7 +75,8 @@ class ImageManipulation(commands.Cog, name="Image"):
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.colors = [0x0dd2ff, 0x03f5ff, 0x2affa9, 0x18e6ff, 0x17ffc2, 0x03f5ff, 0x30e79d]
+        self.colors = [0x0dd2ff, 0x03f5ff, 0x2affa9,
+                       0x18e6ff, 0x17ffc2, 0x03f5ff, 0x30e79d]
 
     COG_EMOJI = "🖼️"
 
@@ -109,15 +111,19 @@ class ImageManipulation(commands.Cog, name="Image"):
                                 headers={'Authorization': token},
                                 params={'q': 'requests+language:python'})
         set1 = unb_cred.json()
-        rank, cash, bank, total = set1.get('rank'), set1.get('cash'), set1.get('bank'), set1.get('total')
-        cash, bank, total = "{:,}".format(cash), "{:,}".format(bank), "{:,}".format(total)
-        name, nick, memberID = str(member), str(member.display_name), str(member.id)
+        rank, cash, bank, total = set1.get('rank'), set1.get(
+            'cash'), set1.get('bank'), set1.get('total')
+        cash, bank, total = "{:,}".format(
+            cash), "{:,}".format(bank), "{:,}".format(total)
+        name, nick, memberID = str(member), str(
+            member.display_name), str(member.id)
         print('6')
         base = Image.open("./assets/based.png").convert("RGBA")
         user_bg = doc.to_dict()
         userBackground = user_bg.get("Background")
         print(userBackground)
-        background = Image.open(f"./assets/backgrounds/{userBackground}").convert("RGBA")
+        background = Image.open(
+            f"./assets/backgrounds/{userBackground}").convert("RGBA")
         print('7')
         pfp = member.display_avatar
         data = BytesIO(await pfp.read())
@@ -157,7 +163,8 @@ class ImageManipulation(commands.Cog, name="Image"):
             embed = nextcord.Embed(
                 color=15799643
             )
-            embed.add_field(name="Backgrounds", value=f"{count}:{item}", inline=True)
+            embed.add_field(name="Backgrounds",
+                            value=f"{count}:{item}", inline=True)
             await ctx.send(embed=embed)
 
     @commands.command(name="SetBG")

@@ -30,7 +30,8 @@ class Admin(commands.Cog, name="Admin"):
 
     @commands.command
     async def giverole(self, ctx):
-        testrole = nextcord.utils.find(lambda r: r.name == 'Executive', ctx.guild.roles)
+        testrole = nextcord.utils.find(
+            lambda r: r.name == 'Executive', ctx.guild.roles)
         if testrole in ctx.author.roles:
             await ctx.send('You already have this role')
         else:
@@ -83,7 +84,7 @@ class Admin(commands.Cog, name="Admin"):
         """ Used to deploy the college button roles """
         embed = nextcord.Embed(title='🚨 Select your college role',
                                description='**Click** the button below with your corresponding **college**. \n'
-                                           'After that, head over to <#773935668240973854> to unlock more channels. ',
+                               'After that, head over to <#773935668240973854> to unlock more channels. ',
                                color=15799643)
         await ctx.send(embed=embed, view=RoleView())
 

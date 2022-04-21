@@ -5,7 +5,8 @@ from nextcord.ext import commands
 class Sinner(commands.Converter):
     async def convert(self, ctx, argument):
         argument = await commands.MemberConverter().convert(ctx, argument)  # gets a member object
-        permission = argument.guild_permissions.manage_messages  # can change into any permission
+        # can change into any permission
+        permission = argument.guild_permissions.manage_messages
         if not permission:  # checks if user has the permission
             return argument  # returns user object
         else:

@@ -2,14 +2,14 @@ import nextcord
 import json
 import requests
 import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+import datetime
+
+from firebase_admin import credentials, firestore
 from nextcord.ext import commands
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 from io import BytesIO
 from json import load
 from pathlib import Path
-import datetime
 
 import words.backgrounds
 import bot_config.config
@@ -52,7 +52,7 @@ def checkBalance(api_token, gamblerID):
 def unbAPI(amount, reason, api_token, gamblerID):
     credit_link = init_link + str(gamblerID)
     unb_cred = requests.patch(credit_link, data=json.dumps({'cash': amount, 'reason': reason}),
-                              headers={'Authorization': api_token}, params={'q': 'requests+language:python'})
+                            headers={'Authorization': api_token}, params={'q': 'requests+language:python'})
     credit = unb_cred.json()
     print(f"{reason}: {credit}")
 
@@ -75,8 +75,7 @@ class ImageManipulation(commands.Cog, name="Image"):
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.colors = [0x0dd2ff, 0x03f5ff, 0x2affa9,
-                       0x18e6ff, 0x17ffc2, 0x03f5ff, 0x30e79d]
+        self.colors = [0x0dd2ff, 0x03f5ff, 0x2affa9, 0x18e6ff, 0x17ffc2, 0x03f5ff, 0x30e79d]
 
     COG_EMOJI = "🖼️"
 
@@ -205,7 +204,7 @@ class ImageManipulation(commands.Cog, name="Image"):
     async def _tweet(self, ctx, *, text: str):
         """ Generate a tweet image with your name """
         allowed_channel = [887626373991120946, 866219322421805056, 866385308698017804, 848771072933363732,
-                           880375753538170880]
+                           880375753538170880, 748708955500445737]
         now = datetime.datetime.utcnow()
         if ctx.channel.id not in allowed_channel:
             return

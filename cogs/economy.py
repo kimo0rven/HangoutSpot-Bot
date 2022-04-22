@@ -19,7 +19,7 @@ import bot_config.config
 cwd = Path(__file__).parents[0]
 cwd = str(cwd)
 print(f"{cwd}\n-----")
-with Path(cwd + "./bot_config/unb_token.json").open() as f:
+with Path("./bot_config/unb_token.json").open() as f:
     config = load(f)
 
 currency = bot_config.config.currency

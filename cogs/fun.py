@@ -28,7 +28,7 @@ def text_to_owo(text):
                 'Y' if v.isupper() else 'y', v))
 
     return text
-
+ 
 
 def last_replace(s, old, new):
     li = s.rsplit(old, 1)
@@ -139,6 +139,8 @@ class Fun(commands.Cog):
     @commands.command(name="Beer", aliases=['Drink', 'Shat'])
     async def beer(self, ctx, member: nextcord.Member = None):
         """ Drink beer with someone """
+        if member.bot:
+            return
         if member == ctx.author or not member:
             await ctx.send(embed=nextcord.Embed(description=f"🍺 | {ctx.author.name} Party Time !! , *Enjoying Beer*",
                                                 color=3092790))
@@ -146,8 +148,6 @@ class Fun(commands.Cog):
         elif member == self.bot.user:
             await ctx.send(embed=nextcord.Embed(description="🍺 | Don't worry I will Enjoy beer with you  *brr*",
                                                 color=3092790))
-            return
-        elif member.bot:
             return
 
         coffee_msg = await ctx.send(embed=nextcord.Embed(

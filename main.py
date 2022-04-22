@@ -1,11 +1,10 @@
 import nextcord
-import logging
-import json
-import os
+import logging, json, os
 import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
 
+import bot_config.config
+
+from firebase_admin import credentials, firestore
 from pathlib import Path
 from nextcord.ext import commands
 
@@ -17,7 +16,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 secret_file = json.load(open(cwd + '/bot_config/secrets.json'))
-
+prefix = bot_config.config.prefix
 
 def main():
     intents = nextcord.Intents.default()
@@ -25,7 +24,7 @@ def main():
     intents.guilds = True
     intents.messages = True
     intents.presences = True
-    bot = commands.Bot(command_prefix=commands.when_mentioned_or('!'),
+    bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix),
                     description="Official Bot", case_insensitive=True,
                     help_command=None, intents=intents, owner_id=575577106239717407)
     bot.config_token = secret_file['token']

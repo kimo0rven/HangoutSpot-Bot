@@ -48,7 +48,7 @@ class Roleplay(commands.Cog):
         else:
             target = member.name
         embed = nextcord.Embed(
-            description=f"{emoji}**{ctx.author.name}** {name}ed **{target}**", color=color)
+            description=f"{emoji}**{ctx.author.name}** {name}ged **{target}**", color=color)
         embed.set_image(url=kawaii(name))
         await ctx.send(embed=embed)
 
@@ -63,7 +63,7 @@ class Roleplay(commands.Cog):
         else:
             target = member.name
         embed = nextcord.Embed(
-            description=f"{emoji}**{ctx.author.name}** {name}ed **{target}**", color=color)
+            description=f"{emoji}**{ctx.author.name}** {name}ped **{target}**", color=color)
         embed.set_image(url=kawaii(name))
         await ctx.send(embed=embed)
 
@@ -108,7 +108,7 @@ class Roleplay(commands.Cog):
         else:
             target = member.name
         embed = nextcord.Embed(
-            description=f"{emoji}**{ctx.author.name}** {name}ed **{target}**", color=color)
+            description=f"{emoji}**{ctx.author.name}** {name}ned **{target}**", color=color)
         embed.set_image(url=kawaii(name))
         await ctx.send(embed=embed)
 
@@ -183,7 +183,7 @@ class Roleplay(commands.Cog):
         else:
             target = member.name
         embed = nextcord.Embed(
-            description=f"{emoji}**{ctx.author.name}** {name}ed **{target}**", color=color)
+            description=f"{emoji}**{ctx.author.name}** {name}ted **{target}**", color=color)
         embed.set_image(url=kawaii(name))
         await ctx.send(embed=embed)
 

@@ -192,7 +192,6 @@ class Roleplay(commands.Cog):
         """ Celebrate that you're happy """
         name = "happy"
         emoji = "😄"
-
         embed = nextcord.Embed(
             description=f"{emoji}**{ctx.author.name}** is feeling {name}", color=color)
         embed.set_image(url=kawaii(name))
@@ -203,7 +202,6 @@ class Roleplay(commands.Cog):
         """ Are you feeling cute? """
         name = "cute"
         emoji = "🥺"
-
         embed = nextcord.Embed(
             description=f"{emoji}**{ctx.author.name}** is feeling {name}", color=color)
         embed.set_image(url=kawaii(name))

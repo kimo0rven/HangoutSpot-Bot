@@ -34,7 +34,7 @@ class Utility(commands.Cog):
             color=nextcord.Color.red()
         )
         embed.set_author(name=f"{ctx.author}({ctx.author.id})",
-                         icon_url=ctx.author.avatar.url)
+                        icon_url=ctx.author.avatar.url)
         embed.timestamp = datetime.datetime.utcnow()
         message = await channel.send(embed=embed)
         await ctx.message.delete()
@@ -47,9 +47,9 @@ class Utility(commands.Cog):
     async def show_bot_stats(self, ctx):
         """ Displays the current stats of the bot """
         embed = Embed(title=f"{self.bot.user.name} stats",
-                      color=self.bot.color,
-                      timestamp=nextcord.utils.utcnow()
-                      )
+                    color=self.bot.color,
+                    timestamp=nextcord.utils.utcnow()
+                    )
         proc = Process()
         with proc.oneshot():
             uptime = timedelta(seconds=time() - proc.create_time())
@@ -64,10 +64,8 @@ class Utility(commands.Cog):
             ("Nextcord", discord_version, True),
             ("Uptime", uptime, True),
             ("CPU time", cpu_time, True),
-            ("CPU Usage",
-             f"{psutil.cpu_percent()}% - {psutil.cpu_count()} Threads", True),
-            ("Memory usage",
-             f"{mem_usage:,.3f} / {mem_total:,.0f} MiB ({psutil.virtual_memory()[2]}%)", True)
+            ("CPU Usage", f"{psutil.cpu_percent()}% - {psutil.cpu_count()} Threads", True),
+            ("Memory usage", f"{mem_usage:,.3f} / {mem_total:,.0f} MiB ({psutil.virtual_memory()[2]}%)", True)
         ]
 
         for name, value, inline in fields:
@@ -119,16 +117,13 @@ class Utility(commands.Cog):
             value=str(ctx.guild.verification_level),
             inline=True,
         )
-        embed2.add_field(name="Number of roles",
-                         value=str(role_count), inline=True)
-        embed2.add_field(
-            name="Number Of Members", value=ctx.guild.member_count, inline=True
+        embed2.add_field(name="Number of roles", value=str(role_count), inline=True)
+        embed2.add_field(name="Number Of Members", value=ctx.guild.member_count, inline=True
         )
-        embed2.add_field(
-            name="Created At",
-            value=ctx.guild.created_at.__format__("%A, %d. %B %Y @ %H:%M:%S"),
-            inline=True,
-        )
+        embed2.add_field(name="Created At",
+                        value=ctx.guild.created_at.__format__("%A, %d. %B %Y @ %H:%M:%S"),
+                        inline=True,
+                        )
         embed2.set_thumbnail(url=ctx.guild.icon.url)
         embed2.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon.url)
         embed2.set_footer(

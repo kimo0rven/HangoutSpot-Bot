@@ -20,7 +20,7 @@ class HelpDropdown(nextcord.ui.Select):
 
 class HelpView(nextcord.ui.View):
     def __init__(self, help_command: "MyHelpCommand", options: list[nextcord.SelectOption], *,
-                 timeout: Optional[float] = 120.0):
+                timeout: Optional[float] = 120.0):
         super().__init__(timeout=timeout)
         self.add_item(HelpDropdown(help_command, options))
         self._help_command = help_command

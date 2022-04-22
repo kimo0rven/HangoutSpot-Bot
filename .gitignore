@@ -1,4 +1,4 @@
-bot_config/config.py
 bot_config/database_credentials.json
 bot_config/secrets.json
 bot_config/unb_token.json
+get-pip.py

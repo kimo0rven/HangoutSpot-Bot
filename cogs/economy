@@ -16,7 +16,10 @@ from util import checkBalance, unbAPI
 from cogs.buttons.scout import Scout
 import bot_config.config
 
-with Path("./HS.py/bot_config/unb_token.json").open() as f:
+cwd = Path(__file__).parents[0]
+cwd = str(cwd)
+print(f"{cwd}\n-----")
+with Path(cwd + "./bot_config/unb_token.json").open() as f:
     config = load(f)
 
 currency = bot_config.config.currency
@@ -34,7 +37,7 @@ def guessChecker(Guess, bet, choice, ctx, color):
             color=color
         )
         embed.set_author(name=ctx.author,
-                         icon_url=ctx.author.avatar.url)
+                        icon_url=ctx.author.avatar.url)
         embed.timestamp = datetime.datetime.utcnow()
         ctx.command.reset_cooldown(ctx)
         return ctx.reply(embed=embed, allowed_mentions=am)
@@ -45,7 +48,7 @@ def guessChecker(Guess, bet, choice, ctx, color):
             color=color
         )
         moreThan50k.set_author(name=ctx.author,
-                               icon_url=ctx.author.avatar.url)
+                            icon_url=ctx.author.avatar.url)
         moreThan50k.timestamp = datetime.datetime.utcnow()
         ctx.command.reset_cooldown(ctx)
         return ctx.reply(embed=moreThan50k, allowed_mentions=am)
@@ -56,7 +59,7 @@ def guessChecker(Guess, bet, choice, ctx, color):
             color=color
         )
         guessMoreThan51.set_author(name=ctx.author,
-                                   icon_url=ctx.author.avatar.url)
+                                icon_url=ctx.author.avatar.url)
         guessMoreThan51.timestamp = datetime.datetime.utcnow()
         ctx.command.reset_cooldown(ctx)
         return ctx.reply(embed=guessMoreThan51, allowed_mentions=am)
@@ -70,7 +73,7 @@ def guessChecker(Guess, bet, choice, ctx, color):
             color=color
         )
         rightGuess.set_author(name=ctx.author,
-                              icon_url=ctx.author.avatar.url)
+                            icon_url=ctx.author.avatar.url)
         rightGuess.timestamp = datetime.datetime.utcnow()
         return ctx.reply(embed=rightGuess, allowed_mentions=am)
 
@@ -150,7 +153,7 @@ class Economy(commands.Cog, name="Economy"):
             unbAPI(beg_amount, reason, ctx.author.id)
 
             embed = nextcord.Embed(description=f"{random.choice(begMessages)} {currency}{'{:,}'.format(beg_amount)}",
-                                   color=self.bot.color)
+                                color=self.bot.color)
             embed.set_author(name=ctx.author, icon_url=ctx.author.avatar.url)
             embed.timestamp = datetime.datetime.utcnow()
             await ctx.reply(embed=embed, allowed_mentions=am)
@@ -178,7 +181,7 @@ class Economy(commands.Cog, name="Economy"):
             reason = 'Fishing'
             unbAPI(caughtValue, reason, ctx.author.id)
             embed = nextcord.Embed(description=f"You cast out your line, brought back a {caughtFish} and sold it for "
-                                               f"{currency}{'{:,}'.format(caughtValue)}", color=self.bot.color)
+                                            f"{currency}{'{:,}'.format(caughtValue)}", color=self.bot.color)
             embed.set_author(name=ctx.author, icon_url=ctx.author.avatar.url)
             embed.timestamp = datetime.datetime.utcnow()
             await ctx.reply(embed=embed, allowed_mentions=am)
@@ -235,7 +238,7 @@ class Economy(commands.Cog, name="Economy"):
                     color=self.bot.color
                 )
                 embed.set_author(name=ctx.author,
-                                 icon_url=ctx.author.avatar.url)
+                                icon_url=ctx.author.avatar.url)
                 embed.timestamp = datetime.datetime.utcnow()
                 await ctx.reply(embed=embed, allowed_mentions=am)
             else:
@@ -292,12 +295,12 @@ class Economy(commands.Cog, name="Economy"):
         if (message.attachments and message.channel.id == 887626373991120946) or (
                 message.attachments and message.channel.id == 748943016659648512):
             emoji_reactions = [":meme_sad_cat_thumbsup:764124436353646683",
-                               "a:peepoLoving:779332967142785035",
-                               "a:peepoGiggle:779333423440986152",
-                               ":wowowow:770164675102638090",
-                               "a:peepocry:782539657296609310",
-                               ":pepetriggered:759382578330730506"
-                               ]
+                                "a:peepoLoving:779332967142785035",
+                                "a:peepoGiggle:779333423440986152",
+                                ":wowowow:770164675102638090",
+                                "a:peepocry:782539657296609310",
+                                ":pepetriggered:759382578330730506"
+                                ]
             user_id = message.author.id
             memeReward = random.randrange(1000, 5000)
             reason = "Sending Memes"

@@ -5,6 +5,8 @@ import random
 from nextcord.ext import commands
 
 
+am = nextcord.AllowedMentions(replied_user=False)
+
 def text_to_owo(text):
     """ Converts your text to OwO """
     smileys = [';;w;;', '^w^', '>w<', 'UwU', '(・`ω\´・)', '(´・ω・\`)']
@@ -33,11 +35,9 @@ def last_replace(s, old, new):
     return new.join(li)
 
 
-am = nextcord.AllowedMentions(replied_user=False)
-
-
 class Fun(commands.Cog):
-    """ Shows the list of Fun commands
+    """
+    Shows the list of Fun commands
     """
 
     def __init__(self, bot: commands.Bot):
@@ -56,23 +56,22 @@ class Fun(commands.Cog):
     @commands.command(name="8ball", aliases=["ask", "eightball"])
     async def _8ball(self, ctx):
         """ Ask the the magic 8ball about your future """
-        allowed_channel = [887626373991120946, 848771072933363732,
-                           880375753538170880, 806553902425309244]
+        allowed_channel = [887626373991120946, 848771072933363732, 880375753538170880, 806553902425309244, 922948197498888202]
         if ctx.channel.id not in allowed_channel:
             return
         responses = ["It is certain", " It is decidedly so", "Without a doubt", "Yes definitely",
-                     "You may rely on it", "As I see it, yes", "Most likely", "Outlook good",
-                     "Yes", "Signs point to yes", "Reply hazy, try again", "Ask again later",
-                     "Better not tell you now", "Cannot predict now", "Concentrate and ask again",
-                     "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good",
-                     "Very doubtful"]
+                    "You may rely on it", "As I see it, yes", "Most likely", "Outlook good",
+                    "Yes", "Signs point to yes", "Reply hazy, try again", "Ask again later",
+                    "Better not tell you now", "Cannot predict now", "Concentrate and ask again",
+                    "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good",
+                    "Very doubtful"]    
         randomized_responses = random.choice(responses)
         await ctx.send("🎱 | " + randomized_responses + ", **" + str(ctx.author.name + "**"))
 
     @commands.command(name='Choose', description='For when you wanna settle the score some other way')
     async def _choose(self, ctx, *choices: str):
         """Chooses between multiple choices."""
-        allowed_channel = [887626373991120946, 848771072933363732, 880375753538170880, 806553902425309244]
+        allowed_channel = [887626373991120946, 848771072933363732, 880375753538170880, 806553902425309244, 922948197498888202]
         if ctx.channel.id not in allowed_channel:
             return
         await ctx.send(f'**{ctx.author.name}**, I choose ```{random.choice(choices)}```')
@@ -80,7 +79,7 @@ class Fun(commands.Cog):
     @commands.command(name='Dice')
     async def _dice(self, ctx, dice: str):
         """ Rolls a dice in NdN format. """
-        allowed_channel = [887626373991120946, 848771072933363732, 880375753538170880, 806553902425309244]
+        allowed_channel = [887626373991120946, 848771072933363732, 880375753538170880, 806553902425309244, 922948197498888202]
         if ctx.channel.id not in allowed_channel:
             return
         try:
@@ -101,24 +100,22 @@ class Fun(commands.Cog):
     @commands.command(name="Coffee", aliases=['cafe', 'kopi'])
     async def coffee(self, ctx, member: nextcord.Member = None):
         """ Enjoy coffee with someone """
+        if member.bot: 
+            return
         if member == ctx.author or not member:
             await ctx.send(embed=nextcord.Embed(
-                description=f"☕ | {ctx.author.name} Enjoying Coffee alone :smirk: ",
+                description=f"☕ | {ctx.author.name} is enjoying Coffee alone :smirk: ",
                 color=3092790)
             )
-            return
         elif member == self.bot.user:
             await ctx.send(embed=nextcord.Embed(
-                description="☕ | Don't worry I will drink coffee with you  *sips*",
+                description="☕ | Don't worry I will drink coffee with you *sips*",
                 color=3092790)
             )
             return
-        elif member.bot:
-            return
 
-        coffee_offer = f"☕ | {member.mention}, you got a coffee offer from {ctx.author.name}"
         coffee_msg = await ctx.send(embed=nextcord.Embed(
-            description=coffee_offer,
+            description=f"☕ | {member.mention}, you got a coffee offer from {ctx.author.name}",
             color=3092790)
         )
         await coffee_msg.add_reaction('☕')
@@ -153,9 +150,8 @@ class Fun(commands.Cog):
         elif member.bot:
             return
 
-        coffee_offer = f"🍺 | {member.mention}, you got Beer Party offer from {ctx.author.name}"
         coffee_msg = await ctx.send(embed=nextcord.Embed(
-            description=coffee_offer,
+            description=f"🍺 | {member.mention}, you got Beer Party offer from {ctx.author.name}",
             color=3092790)
         )
         await coffee_msg.add_reaction('🍺')

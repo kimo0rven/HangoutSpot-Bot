@@ -24,8 +24,9 @@ token = config["token"]
 init_link = config["init_link"]
 options = words.backgrounds.options
 am = nextcord.AllowedMentions(replied_user=False)
-
-
+cwd = Path(__file__).parents[1]
+cwd = str(cwd)
+print(cwd + " test")
 def circle(pfp, size=(210, 210)):
     pfp = pfp.resize(size, Image.ANTIALIAS).convert("RGBA")
 
@@ -117,12 +118,12 @@ class ImageManipulation(commands.Cog, name="Image"):
         name, nick, memberID = str(member), str(
             member.display_name), str(member.id)
         print('6')
-        base = Image.open("./assets/based.png").convert("RGBA")
+        print(cwd + "/assets/based.png")
+        base = Image.open(cwd + "/assets/based.png").convert("RGBA")
         user_bg = doc.to_dict()
         userBackground = user_bg.get("Background")
         print(userBackground)
-        background = Image.open(
-            f"./assets/backgrounds/{userBackground}").convert("RGBA")
+        background = Image.open(cwd + "/assets/backgrounds/" + userBackground).convert("RGBA")
         print('7')
         pfp = member.display_avatar
         data = BytesIO(await pfp.read())
@@ -132,9 +133,9 @@ class ImageManipulation(commands.Cog, name="Image"):
         draw = ImageDraw.Draw(base)
 
         pfp = circle(pfp, (215, 215))
-        font = ImageFont.truetype("./assets/AlteHaasGroteskBold.ttf", 38)
-        nickFont = ImageFont.truetype("./assets/AlteHaasGroteskBold.ttf", 25)
-        subfont = ImageFont.truetype("./assets/Roboto-Regular.ttf", 25)
+        font = ImageFont.truetype(cwd + "/assets/AlteHaasGroteskBold.ttf", 38)
+        nickFont = ImageFont.truetype(cwd + "/assets/AlteHaasGroteskBold.ttf", 25)
+        subfont = ImageFont.truetype(cwd + "/assets/Roboto-Regular.ttf", 25)
         print('10')
         draw.text((280, 245), name, font=font)
         draw.text((270, 310), nick, font=nickFont)
@@ -177,7 +178,7 @@ class ImageManipulation(commands.Cog, name="Image"):
                 color=15799643
             )
             embed.set_author(name=ctx.author.name + "#" + ctx.author.discriminator,
-                             icon_url=ctx.author.avatar.url)
+                            icon_url=ctx.author.avatar.url)
             embed.timestamp = datetime.datetime.utcnow()
             ctx.command.reset_cooldown(ctx)
             return await ctx.reply(embed=embed, allowed_mentions=am)
@@ -228,7 +229,7 @@ class ImageManipulation(commands.Cog, name="Image"):
             tweet = tweet[1:]
         name = str(ctx.author.display_name)
         nick = str(ctx.author)
-        base = Image.open("./assets/tweet.png").convert("RGBA")
+        base = Image.open(cwd + "/assets/tweet.png").convert("RGBA")
         pfp = ctx.author.display_avatar
         data = BytesIO(await pfp.read())
         pfp = Image.open(data).convert('RGBA')
@@ -237,10 +238,10 @@ class ImageManipulation(commands.Cog, name="Image"):
         draw = ImageDraw.Draw(base)
 
         pfp = circle(pfp, (123, 123))  # avatar size
-        font = ImageFont.truetype("./assets/segoeuib.ttf", 40)
-        nickFont = ImageFont.truetype("./assets/segoeui.ttf", 38)
-        subfont = ImageFont.truetype("./assets/Roboto-Regular.ttf", 51)
-        datefont = ImageFont.truetype("./assets/Roboto-Regular.ttf", 38)
+        font = ImageFont.truetype(cwd + "/assets/segoeuib.ttf", 40)
+        nickFont = ImageFont.truetype(cwd + "/assets/segoeui.ttf", 38)
+        subfont = ImageFont.truetype(cwd + "/assets/Roboto-Regular.ttf", 51)
+        datefont = ImageFont.truetype(cwd + "/assets/Roboto-Regular.ttf", 38)
         draw.text((186, 33), name, font=font)
         draw.text((184, 87), nick, font=nickFont, fill=(129, 151, 166))
         draw.text((32, 182), tweet, font=subfont)

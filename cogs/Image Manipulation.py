@@ -153,8 +153,8 @@ class ImageManipulation(commands.Cog, name="Image"):
             a.seek(0)
             await ctx.send(file=nextcord.File(a, "profile.png"))
             embed = nextcord.Embed()
-            embed.set_image(url="attachment://profile.png")
-            await ctx.send(embed=embed)
+            # embed.set_image(url="attachment://profile.png")
+            # await ctx.send(embed=embed)
 
     @commands.command(name="Backgrounds", aliases=["bgs"])
     async def backgrounds(self, ctx):

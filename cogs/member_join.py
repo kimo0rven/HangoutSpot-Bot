@@ -7,7 +7,7 @@ from pathlib import Path
 
 cwd = Path(__file__).parents[1]
 cwd = str(cwd)
-#https://discord.gg/mmgqxsnX2z
+
 
 def circle(pfp, size=(220, 220)):
     pfp = pfp.resize(size, Image.ANTIALIAS).convert("RGBA")

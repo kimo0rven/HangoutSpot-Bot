@@ -3,6 +3,7 @@ import json
 import requests
 import firebase_admin
 import datetime
+import pytz
 
 from firebase_admin import credentials, firestore
 from nextcord.ext import commands
@@ -10,6 +11,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFont
 from io import BytesIO
 from json import load
 from pathlib import Path
+from datetime import datetime
 
 import words.backgrounds
 import bot_config.config
@@ -24,7 +26,8 @@ token = config["token"]
 init_link = config["init_link"]
 options = words.backgrounds.options
 am = nextcord.AllowedMentions(replied_user=False)
-
+cwd = Path(__file__).parents[1]
+cwd = str(cwd)
 
 def circle(pfp, size=(210, 210)):
     pfp = pfp.resize(size, Image.ANTIALIAS).convert("RGBA")
@@ -87,13 +90,10 @@ class ImageManipulation(commands.Cog, name="Image"):
         allowed_channel = [887626373991120946, 846425542165004338]
         if ctx.channel.id not in allowed_channel:
             return
-        print(2)
         if not member:
             member = ctx.author
-        print(3)
         doc_ref = db.collection(u'users').document(str(member.id))
         doc = doc_ref.get()
-        print(doc.exists)
         if not doc.exists:
             doc_ref.set({
                 u'Background': "background.png",
@@ -102,8 +102,6 @@ class ImageManipulation(commands.Cog, name="Image"):
                 u'Reborn': 0,
             })
             await ctx.send(f"Registered **{member.display_name}**! `!profile` again.")
-            print(doc.exists)
-        print('1')
         userid = str(member.id)
         credit_link = init_link + userid
         unb_cred = requests.get(credit_link,
@@ -116,14 +114,10 @@ class ImageManipulation(commands.Cog, name="Image"):
             cash), "{:,}".format(bank), "{:,}".format(total)
         name, nick, memberID = str(member), str(
             member.display_name), str(member.id)
-        print('6')
-        base = Image.open("./assets/based.png").convert("RGBA")
+        base = Image.open(cwd + "/assets/based.png").convert("RGBA")
         user_bg = doc.to_dict()
         userBackground = user_bg.get("Background")
-        print(userBackground)
-        background = Image.open(
-            f"./assets/backgrounds/{userBackground}").convert("RGBA")
-        print('7')
+        background = Image.open(cwd + "/assets/backgrounds/" + userBackground).convert("RGBA")
         pfp = member.display_avatar
         data = BytesIO(await pfp.read())
         pfp = Image.open(data).convert('RGBA')
@@ -132,10 +126,9 @@ class ImageManipulation(commands.Cog, name="Image"):
         draw = ImageDraw.Draw(base)
 
         pfp = circle(pfp, (215, 215))
-        font = ImageFont.truetype("./assets/AlteHaasGroteskBold.ttf", 38)
-        nickFont = ImageFont.truetype("./assets/AlteHaasGroteskBold.ttf", 25)
-        subfont = ImageFont.truetype("./assets/Roboto-Regular.ttf", 25)
-        print('10')
+        font = ImageFont.truetype(cwd + "/assets/AlteHaasGroteskBold.ttf", 38)
+        nickFont = ImageFont.truetype(cwd + "/assets/AlteHaasGroteskBold.ttf", 25)
+        subfont = ImageFont.truetype(cwd + "/assets/Roboto-Regular.ttf", 25)
         draw.text((280, 245), name, font=font)
         draw.text((270, 310), nick, font=nickFont)
         draw.text((350, 340), rank, font=subfont)
@@ -143,18 +136,15 @@ class ImageManipulation(commands.Cog, name="Image"):
         draw.text((65, 490), memberID, font=subfont)
         draw.text((65, 635), cash, font=subfont)
         draw.text((405, 635), bank, font=subfont)
-        print('11')
         base.paste(pfp, (56, 158), pfp)
-        print('12')
         background.paste(base, (0, 0), base)
-        print('13')
         with BytesIO() as a:
             background.save(a, "PNG")
             a.seek(0)
             await ctx.send(file=nextcord.File(a, "profile.png"))
             embed = nextcord.Embed()
-            embed.set_image(url="attachment://profile.png")
-            await ctx.send(embed=embed)
+            # embed.set_image(url="attachment://profile.png")
+            # await ctx.send(embed=embed)
 
     @commands.command(name="Backgrounds", aliases=["bgs"])
     async def backgrounds(self, ctx):
@@ -177,7 +167,7 @@ class ImageManipulation(commands.Cog, name="Image"):
                 color=15799643
             )
             embed.set_author(name=ctx.author.name + "#" + ctx.author.discriminator,
-                             icon_url=ctx.author.avatar.url)
+                            icon_url=ctx.author.avatar.url)
             embed.timestamp = datetime.datetime.utcnow()
             ctx.command.reset_cooldown(ctx)
             return await ctx.reply(embed=embed, allowed_mentions=am)
@@ -203,11 +193,11 @@ class ImageManipulation(commands.Cog, name="Image"):
     @commands.command(name="Tweet")
     async def _tweet(self, ctx, *, text: str):
         """ Generate a tweet image with your name """
-        allowed_channel = [887626373991120946, 866219322421805056, 866385308698017804, 848771072933363732,
-                           880375753538170880, 748708955500445737]
-        now = datetime.datetime.utcnow()
+        allowed_channel = [887626373991120946, 866219322421805056, 866385308698017804, 848771072933363732, 880375753538170880, 748708955500445737]
+        #now = datetime.datetime.utcnow()
         if ctx.channel.id not in allowed_channel:
             return
+        now = datetime.now(pytz.timezone('Asia/Manila'))
         dateToday = now.strftime("%I:%M %p • %B %d, %Y")
 
         if len(text) > 140:
@@ -228,7 +218,7 @@ class ImageManipulation(commands.Cog, name="Image"):
             tweet = tweet[1:]
         name = str(ctx.author.display_name)
         nick = str(ctx.author)
-        base = Image.open("./assets/tweet.png").convert("RGBA")
+        base = Image.open(cwd + "/assets/tweet.png").convert("RGBA")
         pfp = ctx.author.display_avatar
         data = BytesIO(await pfp.read())
         pfp = Image.open(data).convert('RGBA')
@@ -237,10 +227,10 @@ class ImageManipulation(commands.Cog, name="Image"):
         draw = ImageDraw.Draw(base)
 
         pfp = circle(pfp, (123, 123))  # avatar size
-        font = ImageFont.truetype("./assets/segoeuib.ttf", 40)
-        nickFont = ImageFont.truetype("./assets/segoeui.ttf", 38)
-        subfont = ImageFont.truetype("./assets/Roboto-Regular.ttf", 51)
-        datefont = ImageFont.truetype("./assets/Roboto-Regular.ttf", 38)
+        font = ImageFont.truetype(cwd + "/assets/segoeuib.ttf", 40)
+        nickFont = ImageFont.truetype(cwd + "/assets/segoeui.ttf", 38)
+        subfont = ImageFont.truetype(cwd + "/assets/Roboto-Regular.ttf", 51)
+        datefont = ImageFont.truetype(cwd + "/assets/Roboto-Regular.ttf", 38)
         draw.text((186, 33), name, font=font)
         draw.text((184, 87), nick, font=nickFont, fill=(129, 151, 166))
         draw.text((32, 182), tweet, font=subfont)

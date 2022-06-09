@@ -1,9 +1,15 @@
 import nextcord
+import datetime
+import pytz
 from nextcord.ext import commands
 from nextcord.utils import get
 from PIL import Image, ImageChops, ImageDraw, ImageFont
 from io import BytesIO
+from datetime import datetime
+from pathlib import Path
 
+cwd = Path(__file__).parents[1]
+cwd = str(cwd)
 
 def circle(pfp, size=(220, 220)):
     pfp = pfp.resize(size, Image.ANTIALIAS).convert("RGBA")
@@ -16,6 +22,9 @@ def circle(pfp, size=(220, 220)):
     mask = ImageChops.darker(mask, pfp.split()[-1])
     pfp.putalpha(mask)
     return pfp
+
+def split(string):
+    return string.split()
 
 
 class Others(commands.Cog):
@@ -72,7 +81,55 @@ class Others(commands.Cog):
     async def on_message(self, message):
         if "invite link" in message.content:
             await message.channel.send('https://discord.gg/msuiit or https://discord.gg/VxV2NXD')
-
+            
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        allowed_channel = [984424711658295326, 866219322421805056, 866385308698017804]
+        if message.author.bot: return
+        if message.channel.id not in allowed_channel:
+            return
+        text = message.content
+        now = datetime.now(pytz.timezone('Asia/Manila'))
+        dateToday = now.strftime("%I:%M %p • %B %d, %Y")
+        total = text
+        messageContent = " "
+        # if text.isupper():
+        if text.islower():
+            for i, letter in enumerate(total):
+                if i % 45 == 0:
+                    messageContent += '\n'
+                messageContent += letter
+            messageContent = messageContent[1:]
+        else:
+            for i, letter in enumerate(total):
+                if i % 36 == 0:
+                    messageContent += '\n'
+                messageContent += letter
+            messageContent = messageContent[1:]
+        nick = str(message.author.display_name) #nickname
+        name = str(message.author) #username
+        base = Image.open(cwd + "/assets/tweet.png").convert("RGBA")
+        pfp = message.author.display_avatar
+        data = BytesIO(await pfp.read())
+        pfp = Image.open(data).convert('RGBA')
+        nick = f"{nick}"
+        name = f"@{name[:17]}..." if len(name) > 16 else f"@{name}"
+        draw = ImageDraw.Draw(base)
+        pfp = circle(pfp, (123, 123))
+        font = ImageFont.truetype(cwd + "/assets/segoeuib.ttf", 40)
+        nickFont = ImageFont.truetype(cwd + "/assets/segoeui.ttf", 38)
+        subfont = ImageFont.truetype(cwd + "/assets/Roboto-Regular.ttf", 51)
+        datefont = ImageFont.truetype(cwd + "/assets/Roboto-Regular.ttf", 38)
+        draw.text((186, 33), nick, font=font)
+        draw.text((184, 87), name, font=nickFont, fill=(129, 151, 166))
+        draw.text((32, 182), messageContent, font=subfont)
+        draw.text((39, 487), dateToday, font=datefont, fill=(129, 151, 166))
+        base.paste(pfp, (36, 24), pfp)  # avatar position
+        with BytesIO() as a:
+            base.save(a, "PNG")
+            a.seek(0)
+            await message.delete()
+            await message.channel.send(file=nextcord.File(a, "profile.png"))
 
 def setup(bot: commands.Bot):
     bot.add_cog(Others(bot))
